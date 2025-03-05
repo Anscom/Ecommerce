@@ -1,0 +1,167 @@
+.active {
+    text-decoration: underline;
+    text-decoration-style: solid; /* Make the line solid */
+    
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: sticky;
+    color: black;
+    padding: 0 55px;
+    top: 0;
+    background-color: white;
+}
+
+nav .title {
+    font-size: 1.5rem;
+    margin: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+   list-style: none; 
+}
+
+nav ul li a {
+    display: block;
+    text-decoration: none;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    border-radius: 0.5rem;
+    color: black;
+}
+
+nav ul li a:not(.active):hover {
+    /* text-decoration: underline;
+    text-decoration-style: solid;  */
+    color: blue;
+}
+
+nav .menu {
+    display: none;
+    position: absolute;
+    top: 0.75rem;
+    left: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2.25rem;
+    height: 2rem;
+}
+
+nav .menu span {
+    height: 0.4rem;
+    width: 100%;
+    background-color: black;
+    border-radius: 0.1rem;
+}
+
+.icon-group {
+    display: flex;
+    gap: 20px; /* Adjust the gap size as needed */
+}
+.icon-group a {
+    color: black; /* Ensure icons stay black */
+    text-decoration: none; /* Remove any underline or link styling */
+}
+
+.icon-group a:hover {
+    color: blue;
+}
+
+.icon-group svg {
+    font-size: 1.15rem; /* Adjust size as needed */
+}
+
+.search-bar {
+    flex-grow: 1; /* Take up remaining space */
+    max-width: 50%;
+    margin: 0 1rem;
+}
+
+.search-bar input {
+    width: 100%; /* Full width within the container */
+    padding: 0.5rem;
+    font-size: 1rem;
+    
+}
+
+@media (max-width: 885px) {
+    nav {
+        padding: 0;
+    }
+
+    .search-bar {
+        flex-grow: 0;
+        margin: 0;
+    }
+}
+
+@media (max-width: 550px) {
+    nav {
+        padding: 0;
+    }
+
+    nav .menu {
+        display: flex;
+        position: absolute; /* Keep hamburger at the top */
+        top: 0.75rem;
+        left: 0.5rem;
+        z-index: 20; /* Ensure it's above other elements */
+    }
+
+    
+    nav .title {
+        padding-left: 15px;
+    }
+
+    nav ul {
+        display: none; /* Hide the menu by default */
+        flex-direction: column;
+        width: 100%; /* Make it span the full width */
+        position: absolute; /* Position it properly */
+        top: 3.5rem; /* Push it below the hamburger and title */
+        left: 0;
+        background-color: white; /* Background to ensure visibility */
+        z-index: 10; /* Ensure it's visible above content */
+        padding: 0.5rem 0;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for visibility */
+    }
+
+    nav ul.open {
+        display: flex; /* Show the menu when open */
+    }
+
+    nav ul li {
+        width: 100%; /* Each list item takes full width */
+        text-align: center; /* Center-align the text */
+        padding: 0.5rem 0; /* Add padding for better spacing */
+    }
+
+    nav ul li a {
+        margin: 0; /* Remove extra margins */
+    }
+
+    .icon-group {
+        display: flex;
+        justify-content: space-between; /* Spread out icons */
+        margin-top: 1rem;
+        gap: 10px;
+    }
+
+    .search-bar {
+        margin-top: 1rem;
+        width: 10%;
+    }
+}
