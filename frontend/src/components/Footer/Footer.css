@@ -1,0 +1,75 @@
+.footer {
+    background-color: black;
+    color: white;
+}
+
+.footer ul {
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.footer ul li {
+    padding: 0;
+    margin: 3px 0;
+}
+
+.footer ul a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping into two rows */
+    justify-content: space-evenly;
+}
+
+
+.footer ul li::after {
+    content: none !important; /* Ensures nothing is added */
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.footer p {
+    color: white;
+}
+
+.footer-bottom ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.footer-bottom li {
+    margin: 0 5px;
+}
+
+.footer-bottom li a{
+    margin: 0 5px;
+}
+
+@media (max-width: 707px) {
+    .footer ul li {
+        margin: 1px 0;
+    }
+
+    .footer-section {
+        width: 45%; /* Now 2 columns */
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    
+    .footer-section:last-child {
+        width: 90%; /* Make the last item full width */
+    }
+}
