@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -120,6 +121,8 @@ public class ItemServiceImpl implements ItemService{
         }
     }
 
+
+
     @Override
     public List<ImageDto> getImagesByItemId(Long itemId) {
         List<Image> images = imageRepository.findByItemId(itemId);  // Ensure correct field reference
@@ -130,6 +133,61 @@ public class ItemServiceImpl implements ItemService{
         return images.stream()
                 .map(this::convertToImageDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ItemDto updateItem(Long itemId, ItemDto itemDto, MultipartFile[] imageFiles) {
+        log.info("Updating item with ID: {}", itemId);
+        try {
+            Item existingItem = itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("Item not found"));
+            // ✅ Update only provided fields, keep old values if null
+            if (itemDto.getName() != null) existingItem.setName(itemDto.getName());
+            if (itemDto.getDescription() != null) existingItem.setDescription(itemDto.getDescription());
+            if (itemDto.getPrice() != null) existingItem.setPrice(itemDto.getPrice());
+            if (itemDto.getColor() != null) existingItem.setColor(itemDto.getColor());
+            if (itemDto.getStock() != 0) existingItem.setStock(itemDto.getStock());
+            if (itemDto.getGender() != null) existingItem.setGender(itemDto.getGender());
+            if (itemDto.getSize() != null) existingItem.setSize(itemDto.getSize());
+            if (itemDto.getMaterial() != null) existingItem.setMaterial(itemDto.getMaterial());
+            if (itemDto.getRating() != null) existingItem.setRating(itemDto.getRating());
+
+            // 3. Handle image updates
+            if(imageFiles != null && imageFiles.length > 0) {
+                imageRepository.deleteByItemId(itemId);
+
+                List<Image> newImages = new ArrayList<>();
+                for (MultipartFile imageFile : imageFiles) {
+                    if (!imageFile.isEmpty()) {
+                        Image newImage = new Image();
+                        newImage.setImageName(imageFile.getOriginalFilename());
+                        newImage.setImageType(imageFile.getContentType());
+                        newImage.setImageData(imageFile.getBytes());
+                        newImage.setItem(existingItem);
+                        newImages.add(newImage);
+                    }
+                }
+                imageRepository.saveAll(newImages);
+            }
+
+            // 4. Save updated Item
+            Item updatedItem = itemRepository.save(existingItem);
+            log.info("Item updated successfully: {}", updatedItem.getId());
+            return newItemDto(updatedItem);
+        } catch (Exception e) {
+            log.error("Error updating item: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteItem(Long itemId) {
+        log.info("Deleting item with ID: {}", itemId);
+        Item existingItem = itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("Item not found"));
+
+        imageRepository.deleteByItemId(itemId);
+        itemRepository.delete(existingItem);
+        log.info("Item deleted successfully: {}", itemId);
+
     }
 
 

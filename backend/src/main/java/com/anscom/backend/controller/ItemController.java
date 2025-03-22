@@ -8,6 +8,7 @@ import com.anscom.backend.dto.ItemDto;
 import com.anscom.backend.repository.ImageRepository;
 import com.anscom.backend.service.ImageService;
 import com.anscom.backend.service.ItemService;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -98,6 +99,29 @@ public class ItemController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+    }
+
+    @PutMapping("/updateItem/{itemId}")
+    public ResponseEntity<ItemDto> updateItem(
+            @PathVariable("itemId") Long itemId,
+            @ModelAttribute ItemDto itemDto,
+            @RequestParam(value = "files", required = false) MultipartFile[] imageFiles) {
+
+        ItemDto updatedItem = itemService.updateItem(itemId, itemDto, imageFiles);
+        if(updatedItem == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedItem);
+    }
+
+    @DeleteMapping("/deleteItem/{itemId}")
+    public ResponseEntity<String> deleteItem(@PathVariable("itemId") Long itemId) {
+        try {
+            itemService.deleteItem(itemId);
+            return ResponseEntity.ok("Item deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found");
         }
     }
 

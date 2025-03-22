@@ -14,6 +14,8 @@ public interface ItemService {
     Page<ItemDto> getItems(Pageable pageable, SizeEnum size, String color, Long minPrice, Long maxPrice, String keyword);
     ItemDto saveItem(ItemDto itemDto, MultipartFile[] imageFiles);
     List<ImageDto> getImagesByItemId(Long itemId);
+    ItemDto updateItem(Long itemId, ItemDto itemDto, MultipartFile[] imageFiles);
+    void deleteItem(Long itemId);
 }
 
 // size, color, price

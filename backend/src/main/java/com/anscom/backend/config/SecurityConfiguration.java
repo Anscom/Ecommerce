@@ -38,6 +38,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/users/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/item/createItem").authenticated() // Require auth for POST
                         .requestMatchers(HttpMethod.GET, "/item/**").permitAll() // Allow GET only
+                        .requestMatchers(HttpMethod.PUT, "/item/updateItem/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/item/deleteItem/{id}").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
