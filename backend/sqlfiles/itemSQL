@@ -1,0 +1,25 @@
+CREATE TABLE `item` (
+    `Id` INT AUTO_INCREMENT PRIMARY KEY,
+    `Name` VARCHAR(255) NOT NULL,
+    `Description` TEXT,
+    `Gender` VARCHAR(3),
+    `Price` DECIMAL(10, 2) NOT NULL,
+    `Rating` VARCHAR(255),
+    `Color` VARCHAR(255) NOT NULL,
+    `Size` VARCHAR(255) NOT NULL,
+    `Stock` VARCHAR(255) NOT NULL,
+    `ImageUrl` VARCHAR(255),
+    `Material` VARCHAR(255) NOT NULL
+)
+
+
+    private String name;
+    private String description;
+    private String gender;
+    private String material;
+    private Long price;
+    private Integer rating;
+    private String color;
+    private SizeEnum size;
+    private int stock;
+    private String imageUrl;

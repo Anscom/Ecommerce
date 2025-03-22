@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-//        final String requestPath = request.getRequestURI();
+        final String requestPath = request.getRequestURI();
 //        System.out.println("Incoming request: " + requestPath); // Debugging log
 //
 //        // ✅ Skip JWT processing for specific endpoints

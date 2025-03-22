@@ -2,6 +2,7 @@ package com.anscom.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,6 +36,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/users/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/item/createItem").authenticated() // Require auth for POST
+                        .requestMatchers(HttpMethod.GET, "/item/**").permitAll() // Allow GET only
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
