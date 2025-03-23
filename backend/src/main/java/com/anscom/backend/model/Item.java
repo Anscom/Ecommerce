@@ -1,5 +1,6 @@
 package com.anscom.backend.model;
 
+import com.anscom.backend.constant.CategoryEnum;
 import com.anscom.backend.constant.SizeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,6 +27,8 @@ public class Item {
     private Long price;
     private Integer rating;
     private String color;
+    @Enumerated(EnumType.STRING)
+    private CategoryEnum category;
 
     @Enumerated(EnumType.STRING)
     private SizeEnum size;
@@ -39,12 +42,12 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return stock == item.stock && Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(description, item.description) && Objects.equals(gender, item.gender) && Objects.equals(material, item.material) && Objects.equals(price, item.price) && Objects.equals(rating, item.rating) && Objects.equals(color, item.color) && size == item.size && Objects.equals(images, item.images);
+        return stock == item.stock && Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(description, item.description) && Objects.equals(gender, item.gender) && Objects.equals(material, item.material) && Objects.equals(price, item.price) && Objects.equals(rating, item.rating) && Objects.equals(color, item.color) && category == item.category && size == item.size && Objects.equals(images, item.images);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, gender, material, price, rating, color, size, stock, images);
+        return Objects.hash(id, name, description, gender, material, price, rating, color, category, size, stock, images);
     }
 
     public Long getId() {
@@ -133,5 +136,13 @@ public class Item {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public CategoryEnum getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEnum category) {
+        this.category = category;
     }
 }

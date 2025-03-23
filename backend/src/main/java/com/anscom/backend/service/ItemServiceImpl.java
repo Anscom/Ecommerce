@@ -1,5 +1,6 @@
 package com.anscom.backend.service;
 
+import com.anscom.backend.constant.CategoryEnum;
 import com.anscom.backend.constant.SizeEnum;
 import com.anscom.backend.dto.ImageDto;
 import com.anscom.backend.dto.ItemDto;
@@ -43,7 +44,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public Page<ItemDto> getItems(Pageable pageable, SizeEnum size, String color, Long minPrice, Long maxPrice, String keyword) {
+    public Page<ItemDto> getItems(Pageable pageable, SizeEnum size, String color, Long minPrice, Long maxPrice, String keyword, CategoryEnum category) {
         Specification<Item> spec = Specification.where(null);
 
         if(size != null) {
@@ -66,6 +67,10 @@ public class ItemServiceImpl implements ItemService{
 
         if(keyword != null && !keyword.isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), "%" + keyword + "%"));
+        }
+
+        if(category != null) {
+            spec = spec.and(((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("category"), category)));
         }
         return itemRepository.findAll(spec, pageable).map(this::newItemDto);
     }
@@ -93,6 +98,7 @@ public class ItemServiceImpl implements ItemService{
             item.setSize(itemDto.getSize());
             item.setMaterial(itemDto.getMaterial());
             item.setRating(itemDto.getRating());
+            item.setCategory(itemDto.getCategory());
 
             Item savedItem = itemRepository.save(item); // Save item first
             // 2. Save multiple images and link them to the item
@@ -150,6 +156,7 @@ public class ItemServiceImpl implements ItemService{
             if (itemDto.getSize() != null) existingItem.setSize(itemDto.getSize());
             if (itemDto.getMaterial() != null) existingItem.setMaterial(itemDto.getMaterial());
             if (itemDto.getRating() != null) existingItem.setRating(itemDto.getRating());
+            if (itemDto.getCategory() != null) existingItem.setCategory(itemDto.getCategory());
 
             // 3. Handle image updates
             if(imageFiles != null && imageFiles.length > 0) {
@@ -190,6 +197,12 @@ public class ItemServiceImpl implements ItemService{
 
     }
 
+    @Override
+    public List<ItemDto> getAllItems() {
+        List<Item> items = itemRepository.findAll();
+        return items.stream().map(this::newItemDto).collect(Collectors.toList());
+    }
+
 
     private ImageDto convertToImageDto(Image image) {
         return ImageDto.builder()
@@ -214,6 +227,7 @@ public class ItemServiceImpl implements ItemService{
                 .material(item.getMaterial())
                 .rating(item.getRating())
                 .imageCount(imageCount)
+                .category(item.getCategory())
                 .build();
     }
 }

@@ -1,11 +1,8 @@
 package com.anscom.backend.dto;
 
+import com.anscom.backend.constant.CategoryEnum;
 import com.anscom.backend.constant.SizeEnum;
 import lombok.Builder;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Builder
 public class ItemDto {
@@ -19,6 +16,7 @@ public class ItemDto {
     private String color;
     private SizeEnum size;
     private int stock;
+    private CategoryEnum category;
     private int imageCount; // New field to store the number of images
 
 
@@ -26,7 +24,7 @@ public class ItemDto {
     public ItemDto() {
     }
 
-    public ItemDto(Long id, String name, String description, String gender, String material, Long price, Integer rating, String color, SizeEnum size, int stock, int imageCount) {
+    public ItemDto(Long id, String name, String description, String gender, String material, Long price, Integer rating, String color, SizeEnum size, int stock, CategoryEnum category, int imageCount) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,6 +35,7 @@ public class ItemDto {
         this.color = color;
         this.size = size;
         this.stock = stock;
+        this.category = category;
         this.imageCount = imageCount;
     }
 
@@ -126,5 +125,13 @@ public class ItemDto {
 
     public void setImageCount(int imageCount) {
         this.imageCount = imageCount;
+    }
+
+    public CategoryEnum getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEnum category) {
+        this.category = category;
     }
 }
