@@ -8,6 +8,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import HomePage from "./pages/HomePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import Navbar from "./components/Navbar";
 
 function App() {
   const { user, checkAuth, checkingAuth } = useAuthStore();
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
