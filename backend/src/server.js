@@ -5,6 +5,7 @@ import path from "path";
 import db from "./lib/db.js";
 import authRoutes from "./routes/auth.route.js";
 import cors from "cors";
+import productRoutes from "./routes/product.route.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 const __dirname = path.resolve();
 
 app.use("/api/auth", authRoutes);
+app.use("/api/product", productRoutes);
 // Start server only after DB is connected
 db.connect((err) => {
   if (err) {
