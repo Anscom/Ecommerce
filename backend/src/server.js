@@ -17,13 +17,13 @@ const app = express();
 const PORT = process.env.PORT || 5004;
 
 // Enable CORS
-const corsOptions = {
-  origin:
-    process.env.NODE_ENV === "development" ? "http://localhost:5173" : "*", // Allow localhost:5173 in dev
-  credentials: true, // Allow cookies to be sent across different origins
-};
+// const corsOptions = {
+//   origin:
+//     process.env.NODE_ENV === "development" ? "http://localhost:5173" : "*", // Allow localhost:5173 in dev
+//   credentials: true, // Allow cookies to be sent across different origins
+// };
 
-app.use(cors(corsOptions)); // Use CORS middleware
+// app.use(cors(corsOptions)); // Use CORS middleware
 
 app.use(express.json({ limit: "10mb" })); // allows you to parse the body of the request
 app.use(cookieParser());
