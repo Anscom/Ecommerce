@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, UserPlus, Loader, ArrowLeft, User } from "lucide-react";
 import flower from "../../assets/flower.jpg";
-import greenplants from "../../assets/greenplants.webp";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../stores/useAuthStore";
 

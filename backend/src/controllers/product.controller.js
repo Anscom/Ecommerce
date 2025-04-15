@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "../lib/cloudinary.js";
 import db from "../lib/db.js"; // Assuming you have set up mysql2 connection pool
 
 export const getAllProducts = async (req, res) => {
@@ -28,7 +28,7 @@ export const createProduct = async (req, res) => {
 
     // Insert into MySQL
     const [result] = await db.promise().query(
-      `INSERT INTO products (name, description, price, image, category, isFeatured, created_at, updated_at)
+      `INSERT INTO products (name, description, price, image, category, is_featured, created_at, updated_at)
 				VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())`,
       [name, description, price, imageUrl, category, false]
     );
@@ -52,7 +52,7 @@ export const getFeaturedProducts = async (req, res) => {
     // Fetch featured products from MySQL database
     const [featuredProducts] = await db
       .promise()
-      .query("SELECT * FROM products WHERE isFeatured = true");
+      .query("SELECT * FROM products WHERE is_featured = true");
 
     if (featuredProducts.length === 0) {
       return res.status(404).json({ message: "No featured products found" });
@@ -143,17 +143,20 @@ export const toggleFeaturedProduct = async (req, res) => {
     }
 
     const updatedProduct = product[0];
-    updatedProduct.isFeatured = !updatedProduct.isFeatured;
+
+    // Toggle the `is_featured` value from the database
+    updatedProduct.is_featured = !updatedProduct.is_featured;
 
     // Update the isFeatured status in MySQL
     await db
       .promise()
-      .query("UPDATE products SET isFeatured = ? WHERE id = ?", [
-        updatedProduct.isFeatured,
+      .query("UPDATE products SET is_featured = ? WHERE id = ?", [
+        updatedProduct.is_featured,
         req.params.id,
       ]);
 
-    res.json(updatedProduct);
+    // Send response with the `isFeatured` field to match frontend expectations
+    res.json({ ...updatedProduct, isFeatured: updatedProduct.is_featured });
   } catch (error) {
     console.log("Error in toggleFeaturedProduct controller", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
