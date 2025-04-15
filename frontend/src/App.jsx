@@ -16,12 +16,21 @@ import CartPage from "./pages/CartPage";
 import PurchaseSuccessPage from "./pages/PurchaseSuccessPage";
 import PurchaseCancelPage from "./pages/PurchaseCancelPage";
 import Footer from "./components/Footer";
+import { useCartStore } from "./stores/useCartStore";
 
 function App() {
   const { user, checkAuth, checkingAuth } = useAuthStore();
+  const { getCartItems } = useCartStore();
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    getCartItems();
+  }, [getCartItems, user]);
 
   if (checkingAuth) return <LoadingSpinner />;
 
