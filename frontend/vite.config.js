@@ -11,5 +11,6 @@ export default defineConfig({
         target: "http://localhost:5004",
       },
     },
+    port: 3004,
   },
 });

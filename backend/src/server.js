@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5004;
 const corsOptions = {
   origin:
     process.env.NODE_ENV === "development"
-      ? "http://localhost:5173"
+      ? "http://localhost:3004"
       : "https://anscom-ecommmerce.onrender.com", // Allow localhost:5173 in dev
   credentials: true, // Allow cookies to be sent across different origins
 };
