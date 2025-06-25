@@ -4,13 +4,13 @@ import { useProductStore } from "../api/useProductStore";
 import FeaturedProducts from "../components/FeaturedProducts";
 
 const categories = [
-  { href: "/jeans", name: "Jeans", imageUrl: "assets/jeans.jpg" },
-  { href: "/t-shirts", name: "T-shirts", imageUrl: "assets/tshirt.jpeg" },
-  { href: "/shoes", name: "Shoes", imageUrl: "assets/shoes.jpg" },
-  { href: "/glasses", name: "Glasses", imageUrl: "assets/glasses.webp" },
-  { href: "/jackets", name: "Jackets", imageUrl: "assets/jackets.jpg" },
-  { href: "/suits", name: "Suits", imageUrl: "assets/suits.avif" },
-  { href: "/bags", name: "Bags", imageUrl: "assets/bags.jpg" },
+  { href: "/jeans", name: "Jeans", imageUrl: "/assets/jeans.jpg" },
+  { href: "/t-shirts", name: "T-shirts", imageUrl: "/assets/tshirt.jpeg" },
+  { href: "/shoes", name: "Shoes", imageUrl: "/assets/shoes.jpg" },
+  { href: "/glasses", name: "Glasses", imageUrl: "/assets/glasses.webp" },
+  { href: "/jackets", name: "Jackets", imageUrl: "/assets/jackets.jpg" },
+  { href: "/suits", name: "Suits", imageUrl: "/assets/suits.avif" },
+  { href: "/bags", name: "Bags", imageUrl: "/assets/bags.jpg" },
 ];
 
 const HomePage = () => {
